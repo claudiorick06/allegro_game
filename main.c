@@ -36,7 +36,7 @@ int main() {
   int vetorPosInicioPersonagem[][2] = {
       {576, 0}, {100, 20}, {200, 405}, {200, 405}, {200, 405}};
 
-  int vetorPosInicioInimigoLava[][2] = {
+  int vetorPosInicioInimigo[][2] = {
       {10, 40}, {320, 120}, {448, 250}, {255, 480}, {575, 410}};
 
   mapa *fase_selecionada = vetor_para_lista_circular(mapas, num_mapas);
@@ -85,10 +85,9 @@ int main() {
     OBJETO lava_tile = {lava,      {0, 0},    0, 0,    {0, 0, 4}, 0,
                         TILE_SIZE, TILE_SIZE, 0, true, true,      0};
 
-    OBJETO lava_enemy = {lava, {0, 0},    0,         0, {0, -1, 0},
-                         0,    TILE_SIZE, TILE_SIZE, 0, true,
-                         true, 0}; // <- starts moving up
-                                   //
+    OBJETO enemy = {lava,      {0, 0}, 0,    0,    {0, -1, 0}, 0, TILE_SIZE,
+                    TILE_SIZE, 0,      true, true, 0}; // <- starts moving up
+                                                       //
     OBJETO fruits_tile = {fruits,    {0, 0},    0, 0,    {0, 0, 0}, 0,
                           TILE_SIZE, TILE_SIZE, 0, true, true,      0};
 
@@ -102,7 +101,7 @@ int main() {
 
     HITBOX *vetorHitbox_wall_tile = NULL;
     HITBOX *vetorHitbox_lava_tile = NULL;
-    HITBOX *vetorHitbox_lava_enemy = NULL;
+    HITBOX *vetorHitbox_enemy = NULL;
     HITBOX *vetorHitbox_fruits_tile = NULL;
     HITBOX *vetorHitbox_wooden_crate_tile = NULL;
 
@@ -126,13 +125,13 @@ int main() {
     personagem.posy = personagem.inicio.pos_init_y;
 
     // lava acts as the enemy here
-    lava_enemy.inicio.pos_init_x =
-        vetorPosInicioInimigoLava[fase_selecionada->num_fase][0];
-    lava_enemy.inicio.pos_init_y =
-        vetorPosInicioInimigoLava[fase_selecionada->num_fase][1];
+    enemy.inicio.pos_init_x =
+        vetorPosInicioInimigo[fase_selecionada->num_fase][0];
+    enemy.inicio.pos_init_y =
+        vetorPosInicioInimigo[fase_selecionada->num_fase][1];
 
-    lava_enemy.posx = lava_enemy.inicio.pos_init_x;
-    lava_enemy.posy = lava_enemy.inicio.pos_init_y;
+    enemy.posx = enemy.inicio.pos_init_x;
+    enemy.posy = enemy.inicio.pos_init_y;
 
     bool fase_on = true;
     bool moving = false;
@@ -176,15 +175,14 @@ int main() {
         moving_test_left(keys[ALLEGRO_KEY_LEFT], &moving, &personagem);
 
         // inimigo nao depende do movimento do jogador
-        colision_With_Enemy(&lava_enemy, &personagem);
+        colision_With_Enemy(&enemy, &personagem);
         colision_enemy_scenery(vetorHitbox_wall_tile, wall_tile.quantidade,
-                               &lava_enemy, maxdisplay_w, maxdisplay_h);
+                               &enemy, maxdisplay_w, maxdisplay_h);
 
-        if (lava_enemy.vec_velocidade.dx != 0 ||
-            lava_enemy.vec_velocidade.dy != 0) {
-          normal_vetor(&lava_enemy);
-          lava_enemy.posx += lava_enemy.vec_velocidade.dx;
-          lava_enemy.posy += lava_enemy.vec_velocidade.dy;
+        if (enemy.vec_velocidade.dx != 0 || enemy.vec_velocidade.dy != 0) {
+          normal_vetor(&enemy);
+          enemy.posx += enemy.vec_velocidade.dx;
+          enemy.posy += enemy.vec_velocidade.dy;
         }
         // Set a new random direction when stuck
         // aplicaçao do incremento
@@ -197,7 +195,7 @@ int main() {
           normal_vetor(&personagem);
 
           colision(vetorHitbox_wall_tile, wall_tile.quantidade, &personagem);
-          colision(vetorHitbox_wall_tile, wall_tile.quantidade, &lava_enemy);
+          colision(vetorHitbox_wall_tile, wall_tile.quantidade, &enemy);
 
           colision_With_Reset(vetorHitbox_lava_tile, lava_tile.quantidade,
                               &personagem);
@@ -251,7 +249,7 @@ int main() {
                               personagem.sprite_dir * personagem.sprite_h,
                               personagem.sprite_w, personagem.sprite_h,
                               personagem.posx, personagem.posy, 0);
-        al_draw_bitmap(lava_enemy.sprite, lava_enemy.posx, lava_enemy.posy, 0);
+        al_draw_bitmap(enemy.sprite, enemy.posx, enemy.posy, 0);
 
         al_flip_display();
       }
