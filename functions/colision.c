@@ -5,7 +5,8 @@
 #include <stdio.h>
 #include <time.h>
 
-HITBOX create_hitbox(float x, float y, float w, float h) {
+HITBOX create_hitbox(float x, float y, float w, float h)
+{
   HITBOX hb;
   hb.L = x;
   hb.R = x + w * 0.6;
@@ -15,20 +16,23 @@ HITBOX create_hitbox(float x, float y, float w, float h) {
 }
 
 // Calcula a hitbox dos pés com deslocamento X
-HITBOX get_hitbox_pes_x(const OBJETO *p) {
+HITBOX get_hitbox_pes_x(const OBJETO *p)
+{
   return create_hitbox(p->posx + p->vec_velocidade.dx,
                        p->posy + (p->sprite_h - PÉS_ALTURA), p->sprite_w,
                        PÉS_ALTURA);
 }
 
 // Calcula a hitbox dos pés com deslocamento Y
-HITBOX geto_hitbox_pes_y(const OBJETO *p) {
+HITBOX geto_hitbox_pes_y(const OBJETO *p)
+{
   return create_hitbox(
       p->posx, p->posy + p->vec_velocidade.dy + (p->sprite_h - PÉS_ALTURA),
       p->sprite_w, PÉS_ALTURA);
 }
 
-bool testa_colisao(HITBOX a, HITBOX b) {
+bool testa_colisao(HITBOX a, HITBOX b)
+{
   return a.L < b.R && a.R > b.L && a.U < b.D && a.D > b.U;
 }
 
@@ -39,35 +43,42 @@ bool testa_colisao(HITBOX a, HITBOX b) {
  * da hitbox_pes_personagem com hitbox_obj
  */
 
-void colision(HITBOX *objetosHITBOX, int num_objetos, OBJETO *personagem) {
+void colision(HITBOX *objetosHITBOX, int num_objetos, OBJETO *personagem)
+{
   HITBOX hitbox_pes_x = get_hitbox_pes_x(personagem);
   HITBOX hitbox_pes_y = geto_hitbox_pes_y(personagem);
-  for (int i = 0; i < num_objetos; i++) {
+  for (int i = 0; i < num_objetos; i++)
+  {
 
     HITBOX hitbox_obj = objetosHITBOX[i];
 
     bool colidiu_x = testa_colisao(hitbox_pes_x, hitbox_obj);
     bool colidiu_y = testa_colisao(hitbox_pes_y, hitbox_obj);
 
-    if (colidiu_x) {
+    if (colidiu_x)
+    {
       personagem->vec_velocidade.dx = 0;
     }
-    if (colidiu_y) {
+    if (colidiu_y)
+    {
       personagem->vec_velocidade.dy = 0;
     }
   }
 }
 
-void colision_With_Reset(HITBOX *objetos, int num_objetos, OBJETO *personagem) {
+void colision_With_Reset(HITBOX *objetos, int num_objetos, OBJETO *personagem)
+{
   HITBOX hitbox_pes_x = get_hitbox_pes_x(personagem);
   HITBOX hitbox_pes_y = geto_hitbox_pes_y(personagem);
-  for (int i = 0; i < num_objetos; i++) {
+  for (int i = 0; i < num_objetos; i++)
+  {
 
     HITBOX hitbox_obj = objetos[i];
 
     bool colidiu_x = testa_colisao(hitbox_pes_x, hitbox_obj);
     bool colidiu_y = testa_colisao(hitbox_pes_y, hitbox_obj);
-    if ((colidiu_x || colidiu_y)) { // gameOver
+    if ((colidiu_x || colidiu_y))
+    { // gameOver
       personagem->posx = personagem->inicio.pos_init_x;
       personagem->posy = personagem->inicio.pos_init_y;
       break;
@@ -75,19 +86,23 @@ void colision_With_Reset(HITBOX *objetos, int num_objetos, OBJETO *personagem) {
   }
 }
 void colision_Consumable(HITBOX *objetos, int num_objetos, OBJETO *personagem,
-                         OBJETO *objeto) {
-
+                         OBJETO *objeto, int *qnt)
+{
   HITBOX hitbox_pes_x = get_hitbox_pes_x(personagem);
   HITBOX hitbox_pes_y = geto_hitbox_pes_y(personagem);
 
-  for (int i = 0; i < num_objetos; i++) {
+  for (int i = 0; i < num_objetos; i++)
+  {
     HITBOX hitbox_obj = objetos[i];
 
     bool colidiu_x = testa_colisao(hitbox_pes_x, hitbox_obj);
     bool colidiu_y = testa_colisao(hitbox_pes_y, hitbox_obj);
-    if ((colidiu_x || colidiu_y)) { // gameOver
+    if ((colidiu_x || colidiu_y))
+    { // gameOver
       printf("coletado\n");
 
+      (*qnt)--;
+      printf(" Restamm %d\n", *qnt);
       // "remove" o objeto
       objetos[i] = (HITBOX){0, 0, 0, 0};
       return;
@@ -96,7 +111,8 @@ void colision_Consumable(HITBOX *objetos, int num_objetos, OBJETO *personagem,
   return;
 }
 void limita_mapa(float *posx, float *posy, int maxdisplay_w, int maxdisplay_h,
-                 int sprite_w, int sprite_h) {
+                 int sprite_w, int sprite_h)
+{
   // Horizontal
   if (*posx < -sprite_w)
     *posx = maxdisplay_w;
