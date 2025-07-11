@@ -69,6 +69,7 @@ HITBOX *inicia_vetorHitbox(char mapa[], OBJETO *obj1, int parametroDeBusca) {
   fclose(arquivo);
 
   obj1->quantidade = numero_de_objetos(matriz, parametroDeBusca);
+  
   if (obj1->colisao == 1) {
     obj_mapa = malloc(obj1->quantidade * sizeof(HITBOX));
     if (!obj_mapa)

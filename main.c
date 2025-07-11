@@ -67,7 +67,7 @@ int main() {
     // --- Variaveis de jogo ---
 
     OBJETO personagem = {
-        sprite,    {0, 0},                 // POSICAO_INICIAL inicio;
+        sprite,    {576, 0},               // POSICAO_INICIAL inicio;
         0,         0,         {0, 0, 4.0}, // vec_velocidade
         0,                                 // int sprite_dir;
         TILE_SIZE, TILE_SIZE,
@@ -112,6 +112,8 @@ int main() {
         inicia_vetorHitbox(fase_selecionada->endereco, &lava_tile, 2);
     vetorHitbox_fruits_tile =
         inicia_vetorHitbox(fase_selecionada->endereco, &fruits_tile, 4);
+
+    int frutas_restantes = fruits_tile.quantidade;
 
     // posiçåo inicial do personagem em cada fase
 
@@ -201,7 +203,7 @@ int main() {
                               &personagem);
 
           colision_Consumable(vetorHitbox_fruits_tile, fruits_tile.quantidade,
-                              &personagem, &fruits_tile);
+                              &personagem, &fruits_tile, &frutas_restantes);
 
           // muda frames quando anda
           fps(&frame_counter, &frame, personagem.num_frames);
@@ -220,6 +222,11 @@ int main() {
         if (personagem.colisao == false) {
           // al_clear_to_color(al_map_rgb(255, 255, 255));
           for (int i = 0; i < maxdisplay_h; i += 15) {
+
+            if (frutas_restantes == 0) {
+              fase_selecionada = fase_selecionada->proxima_fase;
+              fase_on = false;
+            }
 
             al_draw_filled_circle(maxdisplay_h / 2, maxdisplay_h / 2, i,
                                   al_map_rgb(100, 100, 200));
