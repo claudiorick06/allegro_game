@@ -138,28 +138,10 @@ int vetorPosInicioInimigovertical[][2] = {
 
     // posiçåo inicial do personagem em cada fase
 
-    personagem.inicio.pos_init_x =
-        vetorPosInicioPersonagem[fase_selecionada->num_fase][0];
-    personagem.inicio.pos_init_y =
-        vetorPosInicioPersonagem[fase_selecionada->num_fase][1];
+    recive_starting_position(&enemy_horizontal, fase_selecionada, vetorPosInicioInimigoHorizontal);
+    recive_starting_position(&enemy_vertical, fase_selecionada, vetorPosInicioInimigovertical);
+    recive_starting_position(&personagem, fase_selecionada, vetorPosInicioPersonagem);
 
-    personagem.posx = personagem.inicio.pos_init_x;
-    personagem.posy = personagem.inicio.pos_init_y;
-
-    // lava acts as the enemy here
-    enemy_horizontal.inicio.pos_init_x =
-        vetorPosInicioInimigoHorizontal[fase_selecionada->num_fase][0];
-    enemy_horizontal.inicio.pos_init_y =
-        vetorPosInicioInimigoHorizontal[fase_selecionada->num_fase][1];
-    enemy_vertical.inicio.pos_init_x =
-        vetorPosInicioInimigovertical[fase_selecionada->num_fase][0];
-    enemy_vertical.inicio.pos_init_y =
-        vetorPosInicioInimigovertical[fase_selecionada->num_fase][1];
-
-    enemy_horizontal.posx = enemy_horizontal.inicio.pos_init_x;
-    enemy_horizontal.posy = enemy_horizontal.inicio.pos_init_y;
-    enemy_vertical.posx = enemy_vertical.inicio.pos_init_x;
-    enemy_vertical.posy = enemy_vertical.inicio.pos_init_y;
 
     bool fase_on = true;
     bool moving = false;

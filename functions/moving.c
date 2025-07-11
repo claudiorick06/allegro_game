@@ -51,3 +51,10 @@ void normal_vetor(OBJETO *obj) {
     obj->vec_velocidade.dx /= sqrt(2);
   }
 }
+void recive_starting_position(OBJETO *obj, mapa *fase_selecionada,
+                              int vetorPosInicio[][2]) {
+  obj->inicio.pos_init_x = vetorPosInicio[fase_selecionada->num_fase][0];
+  obj->inicio.pos_init_y = vetorPosInicio[fase_selecionada->num_fase][1];
+  obj->posx = obj->inicio.pos_init_x;
+  obj->posy = obj->inicio.pos_init_y;
+}
