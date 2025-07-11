@@ -30,9 +30,11 @@ int main() {
   int maxdisplay_h = 640;
   double speed = 1.0 / 40.0;
 
+    // endereço das fases do jogo
   char *mapas[] = {"images/fase1.txt", "images/fase2.txt", "images/fase3.txt",
                    "images/fase4.txt", "images/fase5.txt"};
   int num_mapas = sizeof(mapas) / sizeof(mapas[0]);
+  //posiçåo inicial dos inimigos
   int vetorPosInicioPersonagem[][2] = {
       {576, 0},
       {100, 20},
@@ -113,7 +115,6 @@ int vetorPosInicioInimigovertical[][2] = {
     int rand_fruit_tile_x = rand() % 6;
     int rand_fruit_tile_y = rand() % 6;
 
-    // endereço das fases do jogo
 
     int frame = 0;
     int frame_counter = 0;
@@ -192,18 +193,8 @@ int vetorPosInicioInimigovertical[][2] = {
         colision_enemy_scenery(vetorHitbox_wall_tile, wall_tile.quantidade,
                                &enemy_vertical, maxdisplay_w, maxdisplay_h);
 
-        if (enemy_horizontal.vec_velocidade.dx != 0 ||
-            enemy_horizontal.vec_velocidade.dy != 0) {
-          normal_vetor(&enemy_horizontal);
-          enemy_horizontal.posx += enemy_horizontal.vec_velocidade.dx;
-          enemy_horizontal.posy += enemy_horizontal.vec_velocidade.dy;
-        }
-        if (enemy_vertical.vec_velocidade.dx != 0 ||
-            enemy_vertical.vec_velocidade.dy != 0) {
-          normal_vetor(&enemy_vertical);
-          enemy_vertical.posx += enemy_vertical.vec_velocidade.dx;
-          enemy_vertical.posy += enemy_vertical.vec_velocidade.dy;
-        }
+        object_translation(&enemy_vertical);
+        object_translation(&enemy_horizontal);
         // Set a new random direction when stuck
         // aplicaçao do incremento
 

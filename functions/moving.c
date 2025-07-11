@@ -58,3 +58,14 @@ void recive_starting_position(OBJETO *obj, mapa *fase_selecionada,
   obj->posx = obj->inicio.pos_init_x;
   obj->posy = obj->inicio.pos_init_y;
 }
+bool object_translation(OBJETO *obj) {
+
+  if (obj->vec_velocidade.dx != 0 || obj->vec_velocidade.dy != 0) {
+    normal_vetor(obj);
+    obj->posx += obj->vec_velocidade.dx;
+    obj->posy += obj->vec_velocidade.dy;
+    return true;
+  } else {
+    return false;
+  }
+}

@@ -10,3 +10,4 @@ void fps(int *frame_counter, int *frame, int num_frames);
 void normal_vetor(OBJETO *obj);
 void recive_starting_position(OBJETO *obj, mapa *fase_selecionada,
                               int vetorPosInicio[][2]);
+bool object_translation(OBJETO *obj);
