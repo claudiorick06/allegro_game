@@ -89,10 +89,10 @@ int main() {
     OBJETO lava_tile = {lava,      {0, 0},    0, 0,    {0, 0, 4}, 0,
                         TILE_SIZE, TILE_SIZE, 0, true, true,      0};
 
-    OBJETO enemy_horizontal = {lava, {0, 0},    0,         0, {0, -1, 0},
+    OBJETO enemy_horizontal = {lava, {0, 0},    0,         0, {1, 0, 6},
                                0,    TILE_SIZE, TILE_SIZE, 0, true,
                                true, 0}; // <- starts moving up
-    OBJETO enemy_vertical = {lava, {0, 0},    0,         0, {1, 0, 0},
+    OBJETO enemy_vertical = {lava, {0, 0},    0,         0, {0, -1, 6},
                              0,    TILE_SIZE, TILE_SIZE, 0, true,
                              true, 0}; // <- starts moving up
                                        //
@@ -194,10 +194,10 @@ int main() {
           normal_vetor(&personagem);
 
           colision(vetorHitbox_wall_tile, wall_tile.quantidade, &personagem);
-          colision(vetorHitbox_wall_tile, wall_tile.quantidade,
-                   &enemy_horizontal);
-          colision(vetorHitbox_wall_tile, wall_tile.quantidade,
-                   &enemy_vertical);
+          // colision(vetorHitbox_wall_tile, wall_tile.quantidade,
+          //          &enemy_horizontal);
+          // colision(vetorHitbox_wall_tile, wall_tile.quantidade,
+          //          &enemy_vertical);
 
           colision_With_Reset(vetorHitbox_lava_tile, lava_tile.quantidade,
                               &personagem);

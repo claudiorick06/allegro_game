@@ -62,8 +62,9 @@ bool object_translation(OBJETO *obj) {
 
   if (obj->vec_velocidade.dx != 0 || obj->vec_velocidade.dy != 0) {
     normal_vetor(obj);
-    obj->posx += obj->vec_velocidade.dx;
-    obj->posy += obj->vec_velocidade.dy;
+    obj->posx += obj->vec_velocidade.dx * obj->vec_velocidade.velocidade;
+    obj->posy += obj->vec_velocidade.dy * obj->vec_velocidade.velocidade;
+    ;
     return true;
   } else {
     return false;

@@ -14,12 +14,20 @@ HITBOX create_hitbox(float x, float y, float w, float h) {
 }
 
 HITBOX create_hitbox_scaled(int x, int y, int w, int h, float escala) {
-  HITBOX hbox;
-  hbox.L = x;
-  hbox.R = x + w * escala;
-  hbox.U = y;
-  hbox.D = y + h * escala;
-  return hbox;
+  HITBOX hb;
+
+  float scaled_w = w * escala;
+  float scaled_h = h * escala;
+
+  float cx = x + w / 2.0f;
+  float cy = y + h / 2.0f;
+
+  hb.L = cx - scaled_w / 2.0f;
+  hb.R = cx + scaled_w / 2.0f;
+  hb.U = cy - scaled_h / 2.0f;
+  hb.D = cy + scaled_h / 2.0f;
+
+  return hb;
 }
 // Calcula a hitbox dos pés com deslocamento X
 HITBOX get_hitbox_pes_x(const OBJETO *p) {
@@ -129,7 +137,7 @@ void colision_enemy_scenery(HITBOX *objetosHITBOX, int num_objetos,
 
   HITBOX hitbox_prox_x =
       create_hitbox_scaled(enemy->posx + enemy->vec_velocidade.dx, enemy->posy,
-                           enemy->sprite_w, enemy->sprite_h, 2.0);
+                           enemy->sprite_w, enemy->sprite_h, 3.0);
 
   HITBOX hitbox_prox_y =
       create_hitbox_scaled(enemy->posx, enemy->posy + enemy->vec_velocidade.dy,
