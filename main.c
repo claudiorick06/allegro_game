@@ -36,12 +36,12 @@ int main() {
   int num_mapas = sizeof(mapas) / sizeof(mapas[0]);
   // posiçåo inicial dos inimigos
   int vetorPosInicioPersonagem[][2] = {
-      {576, 0}, {100, 20}, {200, 405}, {200, 405}, {200, 405}};
+      {576, 0}, {256, 224}, {200, 405}, {200, 405}, {200, 405}};
 
   int vetorPosInicioInimigoHorizontal[][2] = {
-      {10, 40}, {320, 120}, {448, 250}, {255, 480}, {575, 410}};
+      {10, 40}, {300, 330}, {306, 510}, {155, 64}, {375, 250}};
   int vetorPosInicioInimigovertical[][2] = {
-      {173, 88}, {412, 305}, {598, 177}, {37, 451}, {289, 223}};
+      {173, 88}, {575, 305}, {575, 177}, {256, 551}, {389, 223}};
 
   mapa *fase_selecionada = vetor_para_lista_circular(mapas, num_mapas);
 
