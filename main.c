@@ -30,31 +30,18 @@ int main() {
   int maxdisplay_h = 640;
   double speed = 1.0 / 40.0;
 
-    // endereço das fases do jogo
+  // endereço das fases do jogo
   char *mapas[] = {"images/fase1.txt", "images/fase2.txt", "images/fase3.txt",
                    "images/fase4.txt", "images/fase5.txt"};
   int num_mapas = sizeof(mapas) / sizeof(mapas[0]);
-  //posiçåo inicial dos inimigos
+  // posiçåo inicial dos inimigos
   int vetorPosInicioPersonagem[][2] = {
-      {576, 0},
-      {100, 20},
-      {200, 405},
-      {200, 405},
-      {200, 405}};
+      {576, 0}, {100, 20}, {200, 405}, {200, 405}, {200, 405}};
 
   int vetorPosInicioInimigoHorizontal[][2] = {
-      {10, 40},
-      {320, 120},
-      {448, 250},
-      {255, 480},
-      {575, 410}};
-int vetorPosInicioInimigovertical[][2] = {
-    {173, 88},
-    {412, 305},
-    {598, 177},
-    {37, 451},
-    {289, 223}
-};
+      {10, 40}, {320, 120}, {448, 250}, {255, 480}, {575, 410}};
+  int vetorPosInicioInimigovertical[][2] = {
+      {173, 88}, {412, 305}, {598, 177}, {37, 451}, {289, 223}};
 
   mapa *fase_selecionada = vetor_para_lista_circular(mapas, num_mapas);
 
@@ -115,7 +102,6 @@ int vetorPosInicioInimigovertical[][2] = {
     int rand_fruit_tile_x = rand() % 6;
     int rand_fruit_tile_y = rand() % 6;
 
-
     int frame = 0;
     int frame_counter = 0;
 
@@ -139,10 +125,12 @@ int vetorPosInicioInimigovertical[][2] = {
 
     // posiçåo inicial do personagem em cada fase
 
-    recive_starting_position(&enemy_horizontal, fase_selecionada, vetorPosInicioInimigoHorizontal);
-    recive_starting_position(&enemy_vertical, fase_selecionada, vetorPosInicioInimigovertical);
-    recive_starting_position(&personagem, fase_selecionada, vetorPosInicioPersonagem);
-
+    recive_starting_position(&enemy_horizontal, fase_selecionada,
+                             vetorPosInicioInimigoHorizontal);
+    recive_starting_position(&enemy_vertical, fase_selecionada,
+                             vetorPosInicioInimigovertical);
+    recive_starting_position(&personagem, fase_selecionada,
+                             vetorPosInicioPersonagem);
 
     bool fase_on = true;
     bool moving = false;
@@ -229,6 +217,10 @@ int vetorPosInicioInimigovertical[][2] = {
 
         else {
           frame = 0; // Parado: usa quadro do meio
+        }
+        if (frutas_restantes == 0) {
+          fase_selecionada = fase_selecionada->proxima_fase;
+          fase_on = false;
         }
 
         if (personagem.colisao == false) {
