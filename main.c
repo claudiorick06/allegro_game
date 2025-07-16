@@ -92,7 +92,7 @@ int main() {
                         TILE_SIZE, TILE_SIZE, 0, true, true,      0};
 
     OBJETO enemy_horizontal = {
-        enemy, {0, 0}, 0, 0,    {1, 0, 6}, 1,
+        enemy, {0, 0}, 0, 0,    {1, 0, 6}, 2,
         24,    32,     3, true, true,      0}; // <- starts moving up
     OBJETO enemy_vertical = {
         enemy, {0, 0}, 0, 0,    {0, -1, 6}, 3,

@@ -150,12 +150,24 @@ void colision_enemy_scenery(HITBOX *objetosHITBOX, int num_objetos,
       enemy->vec_velocidade.dx *= -1;
       enemy->posx +=
           enemy->vec_velocidade.dx * enemy->vec_velocidade.velocidade;
+      if (enemy->vec_velocidade.dx == 1) {
+        enemy->sprite_dir = 2;
+
+      } else if (enemy->vec_velocidade.dx == -1) {
+        enemy->sprite_dir = 1;
+      }
     }
 
     if (testa_colisao(hitbox_prox_y, obj)) {
       enemy->vec_velocidade.dy *= -1;
       enemy->posy +=
           enemy->vec_velocidade.dy * enemy->vec_velocidade.velocidade;
+      if (enemy->vec_velocidade.dy == 1) {
+        enemy->sprite_dir = 0;
+
+      } else if (enemy->vec_velocidade.dy == -1) {
+        enemy->sprite_dir = 3;
+      }
     }
   }
 
