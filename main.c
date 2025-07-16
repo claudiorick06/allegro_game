@@ -20,8 +20,7 @@
 #include <string.h>
 #include <time.h>
 
-int main()
-{
+int main() {
   srand(time(NULL));
   al_init();
   al_install_keyboard();
@@ -48,8 +47,7 @@ int main()
 
   bool game_on = true;
 
-  while (game_on)
-  {
+  while (game_on) {
     // Inicializações
     ALLEGRO_DISPLAY *disp = al_create_display(maxdisplay_w, maxdisplay_h);
     ALLEGRO_TIMER *timer = al_create_timer(speed);
@@ -75,28 +73,33 @@ int main()
     // --- Variaveis de jogo ---
 
     OBJETO personagem = {
-        sprite, {576, 0}, // POSICAO_INICIAL inicio;
-        0,
-        0,
-        {0, 0, 4.0}, // vec_velocidade
-        0,           // int sprite_dir;
-        TILE_SIZE,
-        TILE_SIZE,
+        sprite,    {576, 0},               // POSICAO_INICIAL inicio;
+        0,         0,         {0, 0, 4.0}, // vec_velocidade
+        0,                                 // int sprite_dir;
+        TILE_SIZE, TILE_SIZE,
         4,    // const int sprite_w, sprite_h, num_frames;
         true, // const bool colisao;
         true, // visivel
         1     //  quantidade, pode ser incrementada ao longo do codigo
     };
-    OBJETO wall_tile = {wall, {0, 0}, 0, 0, {0, 0, 0}, 0, TILE_SIZE, TILE_SIZE, -0, true, true, 0};
+    OBJETO wall_tile = {wall,      {0, 0},    0,  0,    {0, 0, 0}, 0,
+                        TILE_SIZE, TILE_SIZE, -0, true, true,      0};
 
-    OBJETO floor_tile = {floor, {0, 0}, 0, 0, {0, 0, 0}, 0, TILE_SIZE, TILE_SIZE, 0, true, true, 0};
+    OBJETO floor_tile = {floor,     {0, 0},    0, 0,    {0, 0, 0}, 0,
+                         TILE_SIZE, TILE_SIZE, 0, true, true,      0};
 
-    OBJETO lava_tile = {lava, {0, 0}, 0, 0, {0, 0, 4}, 0, TILE_SIZE, TILE_SIZE, 0, true, true, 0};
+    OBJETO lava_tile = {lava,      {0, 0},    0, 0,    {0, 0, 4}, 0,
+                        TILE_SIZE, TILE_SIZE, 0, true, true,      0};
 
-    OBJETO enemy_horizontal = {enemy, {0, 0}, 0, 0, {1, 0, 6}, 1, 24, 32, 3, true, true, 0}; // <- starts moving up
-    OBJETO enemy_vertical = {enemy, {0, 0}, 0, 0, {0, -1, 6}, 3, 24, 32, 3, true, true, 0};  // <- starts moving up
-                                                                                             //
-    OBJETO fruits_tile = {fruits, {0, 0}, 0, 0, {0, 0, 0}, 0, TILE_SIZE, TILE_SIZE, 0, true, true, 0};
+    OBJETO enemy_horizontal = {
+        enemy, {0, 0}, 0, 0,    {1, 0, 6}, 1,
+        24,    32,     3, true, true,      0}; // <- starts moving up
+    OBJETO enemy_vertical = {
+        enemy, {0, 0}, 0, 0,    {0, -1, 6}, 3,
+        24,    32,     3, true, true,       0}; // <- starts moving up
+                                                //
+    OBJETO fruits_tile = {fruits,    {0, 0},    0, 0,    {0, 0, 0}, 0,
+                          TILE_SIZE, TILE_SIZE, 0, true, true,      0};
 
     int rand_fruit_tile_x = rand() % 6;
     int rand_fruit_tile_y = rand() % 6;
@@ -135,38 +138,31 @@ int main()
     bool moving = false;
     // -------------------------
 
-    while (fase_on)
-    {
+    while (fase_on) {
       al_wait_for_event(queue, &event);
 
       // Eventos de teclado
-      if (event.type == ALLEGRO_EVENT_KEY_DOWN)
-      {
+      if (event.type == ALLEGRO_EVENT_KEY_DOWN) {
         keys[event.keyboard.keycode] = true;
 
-        if (ALLEGRO_KEY_F1 == event.keyboard.keycode)
-        {
+        if (ALLEGRO_KEY_F1 == event.keyboard.keycode) {
           fase_selecionada = fase_selecionada->proxima_fase;
           fase_on = false;
         }
 
-        if (ALLEGRO_KEY_ESCAPE == event.keyboard.keycode)
-        {
+        if (ALLEGRO_KEY_ESCAPE == event.keyboard.keycode) {
           fase_on = false;
           game_on = false;
         }
-      }
-      else if (event.type == ALLEGRO_EVENT_KEY_UP)
+      } else if (event.type == ALLEGRO_EVENT_KEY_UP)
         keys[event.keyboard.keycode] = false;
-      else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
-      {
+      else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
         fase_on = false;
         game_on = false;
       }
 
       // --- Lógica de movimento, direção e animação ---
-      if (event.type == ALLEGRO_EVENT_TIMER)
-      {
+      if (event.type == ALLEGRO_EVENT_TIMER) {
         // Move enemy
         fps(&h_frame_counter, &h_frame, enemy_horizontal.num_frames);
         fps(&v_frame_counter, &v_frame, enemy_vertical.num_frames);
@@ -196,8 +192,7 @@ int main()
         limita_mapa(&personagem.posx, &personagem.posy, maxdisplay_w,
                     maxdisplay_h, personagem.sprite_w, personagem.sprite_h);
         // frame loop
-        if (moving)
-        {
+        if (moving) {
           // normalizacao vetor diagonal
           normal_vetor(&personagem);
 
@@ -216,32 +211,26 @@ int main()
           // muda frames quando anda
           fps(&frame_counter, &frame, personagem.num_frames);
           if (personagem.vec_velocidade.dx != 0 ||
-              personagem.vec_velocidade.dy != 0)
-          {
+              personagem.vec_velocidade.dy != 0) {
 
             personagem.posx += personagem.vec_velocidade.dx;
             personagem.posy += personagem.vec_velocidade.dy;
           }
         }
 
-        else
-        {
+        else {
           frame = 0; // Parado: usa quadro do meio
         }
-        if (frutas_restantes == 0)
-        {
+        if (frutas_restantes == 0) {
           fase_selecionada = fase_selecionada->proxima_fase;
           fase_on = false;
         }
 
-        if (personagem.colisao == false)
-        {
+        if (personagem.colisao == false) {
           // al_clear_to_color(al_map_rgb(255, 255, 255));
-          for (int i = 0; i < maxdisplay_h; i += 15)
-          {
+          for (int i = 0; i < maxdisplay_h; i += 15) {
 
-            if (frutas_restantes == 0)
-            {
+            if (frutas_restantes == 0) {
               fase_selecionada = fase_selecionada->proxima_fase;
               fase_on = false;
             }
@@ -269,17 +258,18 @@ int main()
                               personagem.sprite_dir * personagem.sprite_h,
                               personagem.sprite_w, personagem.sprite_h,
                               personagem.posx, personagem.posy, 0);
-        al_draw_bitmap_region(enemy, h_frame * enemy_horizontal.sprite_w,
-                              enemy_horizontal.sprite_dir * enemy_horizontal.sprite_h,
-                              enemy_horizontal.sprite_w, enemy_horizontal.sprite_h,
-                              enemy_horizontal.posx, enemy_horizontal.posy, 0);
+        al_draw_bitmap_region(
+            enemy, h_frame * enemy_horizontal.sprite_w,
+            enemy_horizontal.sprite_dir * enemy_horizontal.sprite_h,
+            enemy_horizontal.sprite_w, enemy_horizontal.sprite_h,
+            enemy_horizontal.posx, enemy_horizontal.posy, 0);
         al_draw_bitmap_region(enemy, v_frame * enemy_vertical.sprite_w,
-                              enemy_vertical.sprite_dir * enemy_vertical.sprite_h,
+                              enemy_vertical.sprite_dir *
+                                  enemy_vertical.sprite_h,
                               enemy_vertical.sprite_w, enemy_vertical.sprite_h,
                               enemy_vertical.posx, enemy_vertical.posy, 0);
 
-        if (strcmp(fase_selecionada->endereco, "images/fase5.txt") == 0)
-        {
+        if (strcmp(fase_selecionada->endereco, "images/fase5.txt") == 0) {
           al_draw_bitmap(win, 0, 0, 0);
         }
 
