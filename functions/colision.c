@@ -137,7 +137,7 @@ void colision_enemy_scenery(HITBOX *objetosHITBOX, int num_objetos,
 
   HITBOX hitbox_prox_x =
       create_hitbox_scaled(enemy->posx + enemy->vec_velocidade.dx, enemy->posy,
-                           enemy->sprite_w, enemy->sprite_h, 2.0);
+                           enemy->sprite_w, enemy->sprite_h, 1.0);
 
   HITBOX hitbox_prox_y =
       create_hitbox_scaled(enemy->posx, enemy->posy + enemy->vec_velocidade.dy,

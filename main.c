@@ -39,9 +39,9 @@ int main() {
       {576, 0}, {256, 224}, {200, 405}, {200, 405}, {200, 405}};
 
   int vetorPosInicioInimigoHorizontal[][2] = {
-      {10, 40}, {300, 330}, {306, 510}, {155, 64}, {375, 250}};
+      {10, 60}, {300, 330}, {306, 64}, {155, 64}, {375, 250}};
   int vetorPosInicioInimigovertical[][2] = {
-      {173, 88}, {575, 305}, {575, 177}, {256, 551}, {389, 223}};
+      {173, 88}, {384, 305}, {35, 207}, {256, 551}, {389, 223}};
 
   mapa *fase_selecionada = vetor_para_lista_circular(mapas, num_mapas);
 
@@ -229,11 +229,6 @@ int main() {
         if (personagem.colisao == false) {
           // al_clear_to_color(al_map_rgb(255, 255, 255));
           for (int i = 0; i < maxdisplay_h; i += 15) {
-
-            if (frutas_restantes == 0) {
-              fase_selecionada = fase_selecionada->proxima_fase;
-              fase_on = false;
-            }
 
             al_draw_filled_circle(maxdisplay_h / 2, maxdisplay_h / 2, i,
                                   al_map_rgb(100, 100, 200));
