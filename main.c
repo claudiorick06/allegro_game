@@ -32,16 +32,16 @@ int main() {
 
   // endereço das fases do jogo
   char *mapas[] = {"images/fase1.txt", "images/fase2.txt", "images/fase3.txt",
-                   "images/fase4.txt", "images/fase5.txt"};
+                   "images/fase4.txt", "images/fase5.txt", "images/fase51.txt"};
   int num_mapas = sizeof(mapas) / sizeof(mapas[0]);
   // posiçåo inicial dos inimigos
-  int vetorPosInicioPersonagem[][2] = {
-      {576, 0}, {256, 224}, {200, 405}, {200, 405}, {200, 405}};
+  int vetorPosInicioPersonagem[][2] = {{576, 0},   {256, 224}, {200, 405},
+                                       {200, 405}, {512, 341}, {200, 405}};
 
   int vetorPosInicioInimigoHorizontal[][2] = {
-      {10, 60}, {300, 330}, {306, 64}, {155, 64}, {375, 250}};
-  int vetorPosInicioInimigovertical[][2] = {
-      {173, 88}, {384, 305}, {35, 207}, {256, 551}, {389, 223}};
+      {10, 60}, {300, 330}, {306, 64}, {155, 64}, {192, 352}, {400, 105}};
+  int vetorPosInicioInimigovertical[][2] = {{173, 88},  {384, 305}, {35, 207},
+                                            {256, 551}, {422, 223}, {500, 75}};
 
   mapa *fase_selecionada = vetor_para_lista_circular(mapas, num_mapas);
 
@@ -133,6 +133,7 @@ int main() {
                              vetorPosInicioInimigovertical);
     recive_starting_position(&personagem, fase_selecionada,
                              vetorPosInicioPersonagem);
+    printf("%d\n", fase_selecionada->num_fase);
 
     bool fase_on = true;
     bool moving = false;
@@ -264,7 +265,7 @@ int main() {
                               enemy_vertical.sprite_w, enemy_vertical.sprite_h,
                               enemy_vertical.posx, enemy_vertical.posy, 0);
 
-        if (strcmp(fase_selecionada->endereco, "images/fase5.txt") == 0) {
+        if (strcmp(fase_selecionada->endereco, "images/fase51.txt") == 0) {
           al_draw_bitmap(win, 0, 0, 0);
         }
 
