@@ -41,7 +41,7 @@ int main() {
   int vetorPosInicioInimigoHorizontal[][2] = {
       {10, 60}, {300, 330}, {306, 64}, {155, 64}, {192, 352}, {400, 105}};
   int vetorPosInicioInimigovertical[][2] = {{173, 88},  {384, 305}, {35, 207},
-                                            {256, 551}, {422, 223}, {500, 75}};
+                                            {256, 551}, {158, 123}, {500, 75}};
 
   mapa *fase_selecionada = vetor_para_lista_circular(mapas, num_mapas);
 
