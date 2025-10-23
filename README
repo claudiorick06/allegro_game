@@ -1,0 +1,83 @@
+Um jogo 2D de aventura/puzzle, estilo tile-based, desenvolvido em C puro com a biblioteca Allegro 5. O jogador deve navegar por diferentes fases, desviando de inimigos e da lava, enquanto coleta todas as frutas para avançar.
+
+Este projeto foi desenvolvido para a disciplina de Programação 2.
+
+TECNOLOGIAS UTILIZADAS
+Linguagem: C
+
+Biblioteca Gráfica: Allegro 5 (para gráficos, primitivas, fontes, input e áudio)
+
+Build System: Make / Makefile
+
+COMO JOGAR (VERSÃO PRONTA)
+Este repositório inclui um executável pré-compilado na pasta '/bin' para facilitar os testes.
+
+(Nota: O executável fornecido foi compilado em ambiente Linux (Ubuntu/Debian). Usuários de Windows ou macOS precisarão compilar o projeto manualmente, como descrito abaixo.)
+
+Clone o repositório:
+
+git clone https://github.com/claudiorick06/allegro_game.git
+
+Entre na pasta do projeto:
+
+cd allegro_game
+
+Dê permissão de execução ao binário (no Linux/macOS):
+
+chmod +x bin/game
+
+Execute o jogo:
+
+./bin/game
+
+COMO COMPILAR (PARA DESENVOLVEDORES)
+Se você deseja compilar o projeto do zero, precisará ter as bibliotecas de desenvolvimento do Allegro 5 instaladas na sua máquina.
+
+(Em sistemas baseados em Debian/Ubuntu, você pode instalá-las com: sudo apt-get install liballegro5-dev liballegro-image5-dev liballegro-font5-dev liballegro-ttf5-dev liballegro-primitives5-dev liballegro-audio5-dev liballegro-acodec5-dev)
+
+Clone o repositório e entre na pasta:
+
+git clone https://github.com/claudiorick06/allegro_game.git cd allegro_game
+
+Limpe qualquer build anterior (opcional, mas recomendado):
+
+make clean
+
+Compile o projeto:
+
+make
+
+O novo executável será criado na pasta 'output/'. Você pode executá-lo com:
+
+./output/game
+
+(Nota: O nome do executável de output é definido pela variável TARGETS no Makefile)
+
+CONTROLES
+Setas Direcionais: Movimenta o personagem
+
+F1: Pula para a próxima fase (modo de debug/teste)
+
+ESC: Fecha o jogo
+
+ESTRUTURA DO PROJETO
+.
+├── bin/
+│   └── game              # Executável pré-compilado
+├── functions/
+│   ├── colision.c        # Lógica de colisão (paredes, lava, inimigos)
+│   ├── cria_mapa.c       # Funções para ler e desenhar o mapa do .txt
+│   └── moving.c          # Lógica de movimento e animação
+├── images/
+│   ├── fase1.txt         # Arquivos de layout dos mapas
+│   ├── sprites.png       # Spritesheets de personagens e objetos
+│   └── ...
+├── structures/
+│   └── objeto.h          # Definição das structs principais (OBJETO, HITBOX)
+├── .gitignore            # Ignora arquivos de build
+├── main.c                # Loop principal do jogo, inicialização do Allegro
+├── Makefile              # Regras de compilação
+└── README.md             # Este arquivo
+
+LICENÇA
+Este projeto está licenciado sob a Licença MIT.
