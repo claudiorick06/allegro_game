@@ -10,12 +10,12 @@ endif
 LDLIBS = -lallegro -lallegro_font -lallegro_ttf -lallegro_image -lallegro_primitives -lallegro_acodec -lallegro_audio functions/moving.c functions/colision.c functions/cria_mapa.c 
 
 
-TARGETS = output/game
+TARGETS = bin/game_linux
 
 all: ${TARGETS}
 	./${TARGETS}
 
-output/game: main.c | output
+bin/game_linux: main.c | bin
 	${CC} ${CFLAGS} $< -o $@ ${LDFLAGS} ${LDLIBS}
 
 output:
